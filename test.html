@@ -1,0 +1,751 @@
+
+<header>
+<script type="text/javascript" src="ClassVerter.js"></script>
+<script>
+
+    function test() {
+        // PHP
+        testPHPToPHP();
+        testPHPToCSHARP();
+        testPHPToJAVA();
+        testPHPToJAVASCRIPT();
+        testPHPToTIPESCRIPT();
+        testPHPToJSONSCHEMA();
+
+        // C#
+        testCSToPHP();
+        testCSToCS();
+        testCSToJAVA();
+        testCSToJS();
+        testCSToTS();
+        testCSToJSONSCHEMA();
+
+        // JAVA
+        testJAVAToPHP();
+        testJAVAToCSHARP();
+        testJAVAToJAVA();
+        testJAVAToJAVASCRIPT();
+        testJAVAToTIPESCRIPT();
+        testJAVAToJSONSCHEMA();   
+    }
+
+    function testPHPToPHP(){
+	    var converter = new Converter();
+        var phpToConvert = 
+`class A{
+$b=[];
+$c=array();
+$d=0;
+$e="ciao";
+$f=true;
+$g=new stdClass();
+$h;
+$i=false;
+}`;
+
+        var expected =
+`class A{
+public $b=[];
+public $c=array();
+public $d=0;
+public $e="ciao";
+public $f=true;
+public $g=new stdClass();
+public $h;
+public $i=false;
+}`;
+    
+        var result = converter.convertToClass(phpToConvert, "PHP", "PHP", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("pp").innerHTML = "OK";
+        } else {
+            document.getElementById("pp").innerHTML = "ERROR";
+        }
+    }
+
+    function testPHPToCSHARP() {
+        var converter = new Converter();
+        var phpToConvert =
+`class A{
+$b=[];
+$c=array();
+$d=0;
+$e="ciao";
+$f=true;
+$g=new stdClass();
+$h;
+$i=false;
+}`;
+
+        var expected =
+`class A{
+public List<object> b=List<object>();
+public List<object> c=List<object>();
+public int d=0;
+public string e="ciao";
+public bool f=true;
+public object g=new object();
+public object h;
+public bool i=false;
+}`;
+
+        var result = converter.convertToClass(phpToConvert, "PHP", "C#", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("pc").innerHTML = "OK";
+        } else {
+            document.getElementById("pc").innerHTML = "ERROR";
+        }
+    }
+
+    function testPHPToJAVA() {
+        var converter = new Converter();
+        var phpToConvert =
+`class A{
+$b=[];
+$c=array();
+$d=0;
+$e="ciao";
+$f=true;
+$g=new stdClass();
+$h;
+$i=false;
+}`;
+
+        var expected =
+`class A{
+public List<Object> b=new ArrayList<Object>();
+public List<Object> c=new ArrayList<Object>();
+public int d=0;
+public String e="ciao";
+public boolean f=true;
+public Object g=new Object();
+public Object h;
+public boolean i=false;
+}`;
+
+        var result = converter.convertToClass(phpToConvert, "PHP", "JAVA", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("pj").innerHTML = "OK";
+        } else {
+            document.getElementById("pj").innerHTML = "ERROR";
+        }
+    }
+
+    function testPHPToJAVASCRIPT() {
+        var converter = new Converter();
+        var phpToConvert =
+`class A{
+$b=[];
+$c=array();
+$d=0;
+$e="ciao";
+$f=true;
+$g=new stdClass();
+$h;
+$i=false;
+}`;
+
+        var expected =
+`var A = function(){
+this.b=new Array<object>();
+this.c=new Array<object>();
+this.d=0;
+this.e="ciao";
+this.f=true;
+this.g={};
+this.h;
+this.i=false;
+}`;
+
+        var result = converter.convertToClass(phpToConvert, "PHP", "JS", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("pjs").innerHTML = "OK";
+        } else {
+            document.getElementById("pjs").innerHTML = "ERROR";
+        }
+    }
+
+    function testPHPToTIPESCRIPT() {
+        var converter = new Converter();
+        var phpToConvert =
+`class A{
+$b=[];
+$c=array();
+$d=0;
+$e="ciao";
+$f=true;
+$g=new stdClass();
+$h;
+$i=false;
+}`;
+
+        var expected =
+`class A{
+public b:Array<any>=new Array<any>();
+public c:Array<any>=new Array<any>();
+public d:number=0;
+public e:string="ciao";
+public f:boolean=true;
+public g:any={};
+public h:any;
+public i:boolean=false;
+}`;
+
+        var result = converter.convertToClass(phpToConvert, "PHP", "TS", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("pt").innerHTML = "OK";
+        } else {
+            document.getElementById("pt").innerHTML = "ERROR";
+        }
+    }
+
+    function testPHPToJSONSCHEMA() {
+        var converter = new Converter();
+        var phpToConvert =
+`class A{
+$b=[];
+$c=array();
+$d=0;
+$e="ciao";
+$f=true;
+$g=new stdClass();
+$h;
+$i=false;
+}`;
+
+        var expected = `{"title":"A","type":"object","properties":{"b":{"type":"array","default":"[]"},"c":{"type":"array","default":"array()"},"d":{"type":"number","default":"0"},"e":{"type":"string","default":"ciao"},"f":{"type":"boolean","default":"true"},"g":{"type":"object","default":"new stdClass()"},"h":{"type":"object","default":null},"i":{"type":"boolean","default":"false"}}}`;
+
+        var result = converter.convertToClass(phpToConvert, "PHP", "JSONSCHEMA", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("pjss").innerHTML = "OK";
+        } else {
+            document.getElementById("pjss").innerHTML = "ERROR";
+        }
+    }
+
+    function testCSToPHP() {
+        var converter = new Converter();
+        var csToConvert =
+`class A{
+int b = 0;
+string c = "ciao";
+bool d = true;
+List<int> e = new List<int>();
+object f;
+int g;
+string h;
+bool i;
+List<int> j;
+Casa k;
+bool l = false;
+}`;
+
+        var expected =
+`class A{
+public $b=0;
+public $c="ciao";
+public $d=true;
+public $e=array();
+public $f;
+public $g;
+public $h;
+public $i;
+public $j;
+public $k;
+public $l=false;
+}`;
+
+        var result = converter.convertToClass(csToConvert, "C#", "PHP", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("cp").innerHTML = "OK";
+        } else {
+            document.getElementById("cp").innerHTML = "ERROR";
+        }
+    }
+
+    function testCSToCS() {
+        var converter = new Converter();
+        var csToConvert =
+`class A{
+int b = 0;
+string c = "ciao";
+bool d = true;
+List<int> e = new List<int>();
+object f;
+int g;
+string h;
+bool i;
+List<int> j;
+Casa k;
+bool l = false;
+}`;
+
+        var expected =
+`class A{
+public int b=0;
+public string c="ciao";
+public bool d=true;
+public List<int> e=List<int>();
+public object f;
+public int g;
+public string h;
+public bool i;
+public List<int> j;
+public object k;
+public bool l=false;
+}`;
+
+        var result = converter.convertToClass(csToConvert, "C#", "C#", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("cc").innerHTML = "OK";
+        } else {
+            document.getElementById("cc").innerHTML = "ERROR";
+        }
+    }
+
+    function testCSToJAVA() {
+        var converter = new Converter();
+        var csToConvert =
+            `class A{
+int b = 0;
+string c = "ciao";
+bool d = true;
+List<int> e = new List<int>();
+object f;
+int g;
+string h;
+bool i;
+List<int> j;
+Casa k;
+bool l = false;
+}`;
+
+        var expected =
+            `class A{
+public int b=0;
+public String c="ciao";
+public boolean d=true;
+public List<int> e=new ArrayList<int>();
+public Object f;
+public int g;
+public String h;
+public boolean i;
+public List<int> j;
+public Object k;
+public boolean l=false;
+}`;
+
+        var result = converter.convertToClass(csToConvert, "C#", "JAVA", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("cj").innerHTML = "OK";
+        } else {
+            document.getElementById("cj").innerHTML = "ERROR";
+        }
+    }
+
+    function testCSToJS() {
+        var converter = new Converter();
+        var csToConvert =
+            `class A{
+int b = 0;
+string c = "ciao";
+bool d = true;
+List<int> e = new List<int>();
+object f;
+int g;
+string h;
+bool i;
+List<int> j;
+Casa k;
+bool l = false;
+}`;
+
+        var expected =
+            `var A = function(){
+this.b=0;
+this.c="ciao";
+this.d=true;
+this.e=new Array();
+this.f;
+this.g;
+this.h;
+this.i;
+this.j;
+this.k;
+this.l=false;
+}`;
+
+        var result = converter.convertToClass(csToConvert, "C#", "JS", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("cjs").innerHTML = "OK";
+        } else {
+            document.getElementById("cjs").innerHTML = "ERROR";
+        }
+    }
+
+    function testCSToTS() {
+        var converter = new Converter();
+        var csToConvert =
+            `class A{
+int b = 0;
+string c = "ciao";
+bool d = true;
+List<int> e = new List<int>();
+object f;
+int g;
+string h;
+bool i;
+List<int> j;
+Casa k;
+bool l = false;
+}`;
+
+        var expected =
+            `class A{
+public b:number=0;
+public c:string="ciao";
+public d:boolean=true;
+public e:Array<number>=new Array<number>();
+public f:any;
+public g:number;
+public h:string;
+public i:boolean;
+public j:Array<number>;
+public k:any;
+public l:boolean=false;
+}`;
+
+        var result = converter.convertToClass(csToConvert, "C#", "TS", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("ct").innerHTML = "OK";
+        } else {
+            document.getElementById("ct").innerHTML = "ERROR";
+        }
+    }
+
+    function testCSToJSONSCHEMA() {
+        var converter = new Converter();
+        var csToConvert =
+            `class A{
+int b = 0;
+string c = "ciao";
+bool d = true;
+List<int> e = new List<int>();
+object f;
+int g;
+string h;
+bool i;
+List<int> j;
+Casa k;
+bool l = false;
+}`;
+
+        var expected = `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":"new List<int>()"},"f":{"type":"object","default":null},"g":{"type":"number","default":null},"h":{"type":"string","default":null},"i":{"type":"boolean","default":null},"j":{"type":"array","items":{"type":"number"},"default":null},"k":{"type":"object","default":null},"l":{"type":"boolean","default":"false"}}}`;
+
+        var result = converter.convertToClass(csToConvert, "C#", "JSONSCHEMA", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("cjss").innerHTML = "OK";
+        } else {
+            document.getElementById("cjss").innerHTML = "ERROR";
+        }
+    }
+
+    function testJAVAToPHP() {
+        var converter = new Converter();
+        var javaToConvert =
+            `class A{
+int b = 0;
+String c = "ciao";
+boolean d = true;
+List<int> e;
+Object f;
+Casa g;
+boolean h = false;
+boolean i;
+String j;
+int k;
+}
+`;
+
+        var expected =
+            `class A{
+public $b=0;
+public $c="ciao";
+public $d=true;
+public $e;
+public $f;
+public $g;
+public $h=false;
+public $i;
+public $j;
+public $k;
+}`;
+
+        var result = converter.convertToClass(javaToConvert, "JAVA", "PHP", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("jvp").innerHTML = "OK";
+        } else {
+            document.getElementById("jvp").innerHTML = "ERROR";
+        }
+    }
+
+    function testJAVAToCSHARP() {
+        var converter = new Converter();
+        var javaToConvert =
+            `class A{
+int b = 0;
+String c = "ciao";
+boolean d = true;
+List<int> e;
+Object f;
+Casa g;
+boolean h = false;
+boolean i;
+String j;
+int k;
+}
+`;
+
+        var expected =
+            `class A{
+public int b=0;
+public string c="ciao";
+public bool d=true;
+public List<int> e;
+public object f;
+public object g;
+public bool h=false;
+public bool i;
+public string j;
+public int k;
+}`;
+
+        var result = converter.convertToClass(javaToConvert, "JAVA", "C#", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("jvc").innerHTML = "OK";
+        } else {
+            document.getElementById("jvc").innerHTML = "ERROR";
+        }
+    }
+
+    function testJAVAToJAVA() {
+        var converter = new Converter();
+        var javaToConvert =
+            `class A{
+int b = 0;
+String c = "ciao";
+boolean d = true;
+List<int> e;
+Object f;
+Casa g;
+boolean h = false;
+boolean i;
+String j;
+int k;
+}
+`;
+
+        var expected =
+            `class A{
+public int b=0;
+public String c="ciao";
+public boolean d=true;
+public List<int> e;
+public Object f;
+public Object g;
+public boolean h=false;
+public boolean i;
+public String j;
+public int k;
+}`;
+
+        var result = converter.convertToClass(javaToConvert, "JAVA", "JAVA", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("jvj").innerHTML = "OK";
+        } else {
+            document.getElementById("jvj").innerHTML = "ERROR";
+        }
+    }
+
+    function testJAVAToJAVASCRIPT() {
+        var converter = new Converter();
+        var javaToConvert =
+            `class A{
+int b = 0;
+String c = "ciao";
+boolean d = true;
+List<int> e;
+Object f;
+Casa g;
+boolean h = false;
+boolean i;
+String j;
+int k;
+}
+`;
+
+        var expected =
+            `var A = function(){
+this.b=0;
+this.c="ciao";
+this.d=true;
+this.e;
+this.f;
+this.g;
+this.h=false;
+this.i;
+this.j;
+this.k;
+}`;
+
+        var result = converter.convertToClass(javaToConvert, "JAVA", "JS", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("jvjs").innerHTML = "OK";
+        } else {
+            document.getElementById("jvjs").innerHTML = "ERROR";
+        }
+    }
+
+    function testJAVAToTIPESCRIPT() {
+        var converter = new Converter();
+        var javaToConvert =
+            `class A{
+int b = 0;
+String c = "ciao";
+boolean d = true;
+List<int> e;
+Object f;
+Casa g;
+boolean h = false;
+boolean i;
+String j;
+int k;
+}
+`;
+
+        var expected =
+            `class A{
+public b:number=0;
+public c:string="ciao";
+public d:boolean=true;
+public e:Array<number>;
+public f:any;
+public g:any;
+public h:boolean=false;
+public i:boolean;
+public j:string;
+public k:number;
+}`;
+
+        var result = converter.convertToClass(javaToConvert, "JAVA", "TS", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("jvt").innerHTML = "OK";
+        } else {
+            document.getElementById("jvt").innerHTML = "ERROR";
+        }
+    }
+
+    function testJAVAToJSONSCHEMA() {
+        var converter = new Converter();
+        var javaToConvert =
+            `class A{
+int b = 0;
+String c = "ciao";
+boolean d = true;
+List<int> e;
+Object f;
+Casa g;
+boolean h = false;
+boolean i;
+String j;
+int k;
+}
+`;
+
+        var expected =
+            `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":null},"f":{"type":"object","default":null},"g":{"type":"object","default":null},"h":{"type":"boolean","default":"false"},"i":{"type":"boolean","default":null},"j":{"type":"string","default":null},"k":{"type":"number","default":null}}}`;
+
+        var result = converter.convertToClass(javaToConvert, "JAVA", "JSONSCHEMA", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("jvjss").innerHTML = "OK";
+        } else {
+            document.getElementById("jvjss").innerHTML = "ERROR";
+        }
+    }
+</script>
+</header>
+
+
+<body onload="test();">
+    <!-- JSON -->
+    <div>JSON - PHP <span id="jp"></span></div>
+    <div>JSON - C# <span id="jc"></span></div>
+    <div>JSON - JAVA <p id="jj"></p></div>
+    <div>JSON - JS <p id="jjs"></p></div>
+    <div>JSON - TS <p id="jt"></p></div>
+    <div>JSON - JSONSCHEMA <p id="jss"></p></div>
+
+    <!-- JSON SCHEMA -->
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <!-- PHP -->
+    <br />
+    <h1>PHP</h1>
+    <div>PHP - PHP <span id="pp"></span></div>
+    <div>PHP - C# <span id="pc"></span></div>
+    <div>PHP - JAVA <span id="pj"></span></div>
+    <div>PHP - JS <span id="pjs"></span></div>
+    <div>PHP - TS <span id="pt"></span></div>
+    <div>PHP - JSONSCHEMA <span id="pjss"></span></div>
+
+    <!-- C# -->
+    <br />
+    <h1>C#</h1>
+    <div>C# - PHP <span id="cp"></span></div>
+    <div>C# - C# <span id="cc"></span></div>
+    <div>C# - JAVA <span id="cj"></span></div>
+    <div>C# - JS <span id="cjs"></span></div>
+    <div>C# - TS <span id="ct"></span></div>
+    <div>C# - JSONSCHEMA <span id="cjss"></span></div>
+
+    <!-- JAVA -->
+    <br />
+    <h1>JAVA</h1>
+    <div>JAVA - PHP <span id="jvp"></span></div>
+    <div>JAVA - C# <span id="jvc"></span></div>
+    <div>JAVA - JAVA <span id="jvj"></span></div>
+    <div>JAVA - JS <span id="jvjs"></span></div>
+    <div>JAVA - TS <span id="jvt"></span></div>
+    <div>JAVA - JSONSCHEMA <span id="jvjss"></span></div>
+
+    <!-- TS -->
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</body>

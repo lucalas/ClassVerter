@@ -1,0 +1,39 @@
+class A{
+$h;
+$b=[];
+$c=array();
+$d=0;
+$e="ciao";
+$f=true;
+$g=new stdClass();
+}
+
+class A{
+int b = 0;
+string c = "ciao";
+bool d = true;
+List<int> e;
+object f;
+int g;
+string h;
+bool i;
+List<int> j;
+Casa k;
+bool l = false;
+}
+
+class A{
+int b = 0;
+String c = "ciao";
+boolean d = true;
+List<int> e;
+Object f;
+}
+
+class A{
+b:number = 0;
+c:string = "ciao";
+d:boolean = true;
+e:Array<int>;
+f:any;
+}

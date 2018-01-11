@@ -1,0 +1,69 @@
+
+<header>
+<script type="text/javascript" src="ClassVerter.js"></script>
+<script>
+
+function toValidate(){
+	var jsonText = document.getElementById("jsonText").value;
+	var jsonClassName = document.getElementById("jsonClassName").value;
+	var toWrite = document.getElementById("convertedValue");
+	var isProperty = document.getElementById("isProperty").checked;
+	var typeFrom = getRadioValue("typeFrom");
+    var typeTo = getRadioValue("typeTo");
+    var doc = document.getElementById("doc").checked;
+	var className = "prova";
+	var converter = new Converter();
+	
+	//toWrite.value = convertJSONToClass(jsonText, className, typeTo, isProperty).join("\n\n");
+    toWrite.value = converter.convertToClass(jsonText, typeFrom, typeTo, { isProperty: isProperty, className: jsonClassName, doc: doc }).join("\n\n");
+	
+	return false;
+}
+
+function getRadioValue(id){
+	var radios = document.getElementsByName(id);
+
+	for (var i = 0, length = radios.length; i < length; i++) {
+		if (radios[i].checked) {
+			// do whatever you want with the checked radio
+			return radios[i].value;
+		}
+	}
+}
+
+function showClassNameText(){
+	// TODO
+}
+
+</script>
+</header>
+
+
+<form onSubmit="return toValidate()">
+	To convert type: <br>
+	<input type="radio" name="typeFrom" value="JSON" checked onClick="showClassNameText()"> JSON<br>
+    <input type="radio" name="typeFrom" value="JSONSCHEMA"> JSONSCHEMA<br>
+	<input type="radio" name="typeFrom" value="PHP" > PHP<br>
+	<input type="radio" name="typeFrom" value="C#" > C#<br>
+	<input type="radio" name="typeFrom" value="JAVA" > JAVA<br>
+	<input type="radio" name="typeFrom" value="TS" > TS<br>
+	Json class name: <input type="text" name="jsonClassName" id ="jsonClassName" ><br>
+	To convert: <br><textarea type="text" name="jsonText" id="jsonText" rows="10" cols="50"></textarea><br><br>
+	
+	Converted type: <br>
+	<input type="radio" name="typeTo" value="PHP" checked> PHP<br>
+	<input type="radio" name="typeTo" value="C#"> C#<br>
+	<input type="radio" name="typeTo" value="JAVA"> JAVA<br>
+	<input type="radio" name="typeTo" value="JS"> JS<br>
+	<input type="radio" name="typeTo" value="TS"> TS<br>
+    <input type="radio" name="typeTo" value="JSONSCHEMA"> JSONSCHEMA<br><br>
+	
+	<input type="checkbox" name="isProperty" id="isProperty"/> Get/Set<br>
+    <input type="checkbox" name="doc" id="doc" /> Documentation<br>
+	<input type="submit" value="Submit"><br><br><br>
+	<hr>
+	<br>
+	Converted: <br><textarea id="convertedValue" name="convertedValue" rows="10" cols="50">
+	</textarea>
+
+</form>

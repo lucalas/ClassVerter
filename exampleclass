@@ -28,6 +28,11 @@ String c = "ciao";
 boolean d = true;
 List<int> e;
 Object f;
+Casa g;
+boolean h = false;
+boolean i;
+String j;
+int k;
 }
 
 class A{
@@ -36,4 +41,9 @@ c:string = "ciao";
 d:boolean = true;
 e:Array<int>;
 f:any;
+g:Casa;
+h:boolean = false;
+i:boolean;
+j:string;
+k:number;
 }

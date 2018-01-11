@@ -27,6 +27,14 @@
         testJAVAToJAVASCRIPT();
         testJAVAToTIPESCRIPT();
         testJAVAToJSONSCHEMA();   
+
+        // TIPESCRIPT
+        testTIPESCRIPTToPHP();
+        testTIPESCRIPTToCSHARP();
+        testTIPESCRIPTToJAVA();
+        testTIPESCRIPTToJAVASCRIPT();
+        testTIPESCRIPTToTIPESCRIPT();
+        testTIPESCRIPTToJSONSCHEMA();
     }
 
     function testPHPToPHP(){
@@ -664,7 +672,7 @@ public k:number;
 
     function testJAVAToJSONSCHEMA() {
         var converter = new Converter();
-        var javaToConvert =
+        var tipescriptToConvert =
             `class A{
 int b = 0;
 String c = "ciao";
@@ -682,7 +690,7 @@ int k;
         var expected =
             `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":null},"f":{"type":"object","default":null},"g":{"type":"object","default":null},"h":{"type":"boolean","default":"false"},"i":{"type":"boolean","default":null},"j":{"type":"string","default":null},"k":{"type":"number","default":null}}}`;
 
-        var result = converter.convertToClass(javaToConvert, "JAVA", "JSONSCHEMA", { isProperty: false, doc: false });
+        var result = converter.convertToClass(tipescriptToConvert, "JAVA", "JSONSCHEMA", { isProperty: false, doc: false });
 
         if (result == expected) {
             document.getElementById("jvjss").innerHTML = "OK";
@@ -690,6 +698,236 @@ int k;
             document.getElementById("jvjss").innerHTML = "ERROR";
         }
     }
+
+    function testTIPESCRIPTToPHP() {
+        var converter = new Converter();
+        var tipescriptToConvert =
+            `class A{
+b:number = 0;
+c:string = "ciao";
+d:boolean = true;
+e:Array<number>;
+f:any;
+g:Casa;
+h:boolean = false;
+i:boolean;
+j:string;
+k:number;
+}
+`;
+
+        var expected =
+            `class A{
+public $b=0;
+public $c="ciao";
+public $d=true;
+public $e;
+public $f;
+public $g;
+public $h=false;
+public $i;
+public $j;
+public $k;
+}`;
+
+        var result = converter.convertToClass(tipescriptToConvert, "TS", "PHP", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("tsp").innerHTML = "OK";
+        } else {
+            document.getElementById("tsp").innerHTML = "ERROR";
+        }
+    }
+
+    function testTIPESCRIPTToCSHARP() {
+        var converter = new Converter();
+        var tipescriptToConvert =
+            `class A{
+b:number = 0;
+c:string = "ciao";
+d:boolean = true;
+e:Array<number>;
+f:any;
+g:Casa;
+h:boolean = false;
+i:boolean;
+j:string;
+k:number;
+}
+`;
+
+        var expected =
+            `class A{
+public int b=0;
+public string c="ciao";
+public bool d=true;
+public List<int> e;
+public object f;
+public object g;
+public bool h=false;
+public bool i;
+public string j;
+public int k;
+}`;
+
+        var result = converter.convertToClass(tipescriptToConvert, "TS", "C#", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("tsc").innerHTML = "OK";
+        } else {
+            document.getElementById("tsc").innerHTML = "ERROR";
+        }
+    }
+
+    function testTIPESCRIPTToJAVA() {
+        var converter = new Converter();
+        var tipescriptToConvert =
+            `class A{
+b:number = 0;
+c:string = "ciao";
+d:boolean = true;
+e:Array<number>;
+f:any;
+g:Casa;
+h:boolean = false;
+i:boolean;
+j:string;
+k:number;
+}
+`;
+
+        var expected =
+            `class A{
+public int b=0;
+public String c="ciao";
+public boolean d=true;
+public List<int> e;
+public Object f;
+public Object g;
+public boolean h=false;
+public boolean i;
+public String j;
+public int k;
+}`;
+
+        var result = converter.convertToClass(tipescriptToConvert, "TS", "JAVA", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("tsj").innerHTML = "OK";
+        } else {
+            document.getElementById("tsj").innerHTML = "ERROR";
+        }
+    }
+
+    function testTIPESCRIPTToJAVASCRIPT() {
+        var converter = new Converter();
+        var tipescriptToConvert =
+            `class A{
+b:number = 0;
+c:string = "ciao";
+d:boolean = true;
+e:Array<number>;
+f:any;
+g:Casa;
+h:boolean = false;
+i:boolean;
+j:string;
+k:number;
+}
+`;
+
+        var expected =
+            `var A = function(){
+this.b=0;
+this.c="ciao";
+this.d=true;
+this.e;
+this.f;
+this.g;
+this.h=false;
+this.i;
+this.j;
+this.k;
+}`;
+
+        var result = converter.convertToClass(tipescriptToConvert, "TS", "JS", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("tsjs").innerHTML = "OK";
+        } else {
+            document.getElementById("tsjs").innerHTML = "ERROR";
+        }
+    }
+
+    function testTIPESCRIPTToTIPESCRIPT() {
+        var converter = new Converter();
+        var tipescriptToConvert =
+            `class A{
+b:number = 0;
+c:string = "ciao";
+d:boolean = true;
+e:Array<number>;
+f:any;
+g:Casa;
+h:boolean = false;
+i:boolean;
+j:string;
+k:number;
+}
+`;
+
+        var expected =
+            `class A{
+public b:number=0;
+public c:string="ciao";
+public d:boolean=true;
+public e:Array<number>;
+public f:any;
+public g:any;
+public h:boolean=false;
+public i:boolean;
+public j:string;
+public k:number;
+}`;
+
+        var result = converter.convertToClass(tipescriptToConvert, "TS", "TS", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("tsts").innerHTML = "OK";
+        } else {
+            document.getElementById("tsts").innerHTML = "ERROR";
+        }
+    }
+
+    function testTIPESCRIPTToJSONSCHEMA() {
+        var converter = new Converter();
+        var tipescriptToConvert =
+            `class A{
+b:number = 0;
+c:string = "ciao";
+d:boolean = true;
+e:Array<number>;
+f:any;
+g:Casa;
+h:boolean = false;
+i:boolean;
+j:string;
+k:number;
+}
+`;
+
+        var expected =
+            `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":null},"f":{"type":"object","default":null},"g":{"type":"object","default":null},"h":{"type":"boolean","default":"false"},"i":{"type":"boolean","default":null},"j":{"type":"string","default":null},"k":{"type":"number","default":null}}}`;
+
+        var result = converter.convertToClass(tipescriptToConvert, "TS", "JSONSCHEMA", { isProperty: false, doc: false });
+
+        if (result == expected) {
+            document.getElementById("tsjss").innerHTML = "OK";
+        } else {
+            document.getElementById("tsjss").innerHTML = "ERROR";
+        }
+    }
+
 </script>
 </header>
 
@@ -742,10 +980,12 @@ int k;
     <div>JAVA - JSONSCHEMA <span id="jvjss"></span></div>
 
     <!-- TS -->
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+    <br />
+    <h1>TIPESCRIPT</h1>
+    <div>TIPESCRIPT - PHP <span id="tsp"></span></div>
+    <div>TIPESCRIPT - C# <span id="tsc"></span></div>
+    <div>TIPESCRIPT - JAVA <span id="tsj"></span></div>
+    <div>TIPESCRIPT - JS <span id="tsjs"></span></div>
+    <div>TIPESCRIPT - TS <span id="tsts"></span></div>
+    <div>TIPESCRIPT - JSONSCHEMA <span id="tsjss"></span></div>
 </body>

@@ -35,6 +35,14 @@
         testTIPESCRIPTToJAVASCRIPT();
         testTIPESCRIPTToTIPESCRIPT();
         testTIPESCRIPTToJSONSCHEMA();
+
+        // JSON
+        testJSONToPHP();
+        testJSONToCSHARP();
+        testJSONToJAVA();
+        testJSONToJAVASCRIPT();
+        testJSONToTIPESCRIPT();
+        testJSONToJSONSCHEMA();
     }
 
     function testPHPToPHP(){
@@ -928,18 +936,156 @@ k:number;
         }
     }
 
+    function testJSONToPHP() {
+        var converter = new Converter();
+        var jsonToConvert =
+            `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
+
+        var expected =
+            `class A{
+public $b=0;
+public $c="ciao";
+public $d=true;
+public $e;
+public $f=new stdClass();
+public $h=false;
+}`;
+
+        var result = converter.convertToClass(jsonToConvert, "JSON", "PHP", { isProperty: false, doc: false, className: "A" });
+
+        if (result == expected) {
+            document.getElementById("jp").innerHTML = "OK";
+        } else {
+            document.getElementById("jp").innerHTML = "ERROR";
+        }
+    }
+
+    function testJSONToCSHARP() {
+        var converter = new Converter();
+        var jsonToConvert =
+            `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
+
+        var expected =
+            `class A{
+public int b=0;
+public string c="ciao";
+public bool d=true;
+public List<object> e;
+public object f=new object();
+public bool h=false;
+}`;
+
+        var result = converter.convertToClass(jsonToConvert, "JSON", "C#", { isProperty: false, doc: false, className: "A" });
+
+        if (result == expected) {
+            document.getElementById("jc").innerHTML = "OK";
+        } else {
+            document.getElementById("jc").innerHTML = "ERROR";
+        }
+    }
+
+    function testJSONToJAVA() {
+        var converter = new Converter();
+        var jsonToConvert =
+            `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
+
+        var expected =
+            `class A{
+public int b=0;
+public String c="ciao";
+public boolean d=true;
+public List<Object> e;
+public Object f=new Object();
+public boolean h=false;
+}`;
+
+        var result = converter.convertToClass(jsonToConvert, "JSON", "JAVA", { isProperty: false, doc: false, className: "A" });
+
+        if (result == expected) {
+            document.getElementById("jj").innerHTML = "OK";
+        } else {
+            document.getElementById("jj").innerHTML = "ERROR";
+        }
+    }
+
+    function testJSONToJAVASCRIPT() {
+        var converter = new Converter();
+        var jsonToConvert =
+            `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
+
+        var expected =
+            `var A = function(){
+this.b=0;
+this.c="ciao";
+this.d=true;
+this.e;
+this.f={};
+this.h=false;
+}`;
+
+        var result = converter.convertToClass(jsonToConvert, "JSON", "JS", { isProperty: false, doc: false, className: "A" });
+
+        if (result == expected) {
+            document.getElementById("jjs").innerHTML = "OK";
+        } else {
+            document.getElementById("jjs").innerHTML = "ERROR";
+        }
+    }
+
+    function testJSONToTIPESCRIPT() {
+        var converter = new Converter();
+        var jsonToConvert =
+            `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
+
+        var expected =
+            `class A{
+public b:number=0;
+public c:string="ciao";
+public d:boolean=true;
+public e:Array<any>;
+public f:any={};
+public h:boolean=false;
+}`;
+
+        var result = converter.convertToClass(jsonToConvert, "JSON", "TS", { isProperty: false, doc: false, className: "A" });
+
+        if (result == expected) {
+            document.getElementById("jt").innerHTML = "OK";
+        } else {
+            document.getElementById("jt").innerHTML = "ERROR";
+        }
+    }
+
+    function testJSONToJSONSCHEMA() {
+        var converter = new Converter();
+        var jsonToConvert =
+            `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
+
+        var expected =
+            `{"title":"A","type":"object","properties":{"b":{"type":"number","default":0},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array"},"f":{"type":"object","default":{}},"h":{"type":"boolean","default":"false"}}}`;
+
+        var result = converter.convertToClass(jsonToConvert, "JSON", "JSONSCHEMA", { isProperty: false, doc: false, className: "A" });
+
+        if (result == expected) {
+            document.getElementById("jss").innerHTML = "OK";
+        } else {
+            document.getElementById("jss").innerHTML = "ERROR";
+        }
+    }
+
 </script>
 </header>
 
 
 <body onload="test();">
     <!-- JSON -->
+    <h1>JSON</h1>
     <div>JSON - PHP <span id="jp"></span></div>
     <div>JSON - C# <span id="jc"></span></div>
-    <div>JSON - JAVA <p id="jj"></p></div>
-    <div>JSON - JS <p id="jjs"></p></div>
-    <div>JSON - TS <p id="jt"></p></div>
-    <div>JSON - JSONSCHEMA <p id="jss"></p></div>
+    <div>JSON - JAVA <span id="jj"></span></div>
+    <div>JSON - JS <span id="jjs"></span></div>
+    <div>JSON - TS <span id="jt"></span></div>
+    <div>JSON - JSONSCHEMA <span id="jss"></span></div>
 
     <!-- JSON SCHEMA -->
     <div></div>

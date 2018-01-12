@@ -47,3 +47,5 @@ i:boolean;
 j:string;
 k:number;
 }
+
+{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}

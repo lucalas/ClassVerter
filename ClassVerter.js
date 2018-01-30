@@ -285,7 +285,7 @@ var ClassVerter = function(){
      * @param {templateType} template template to apply
      * @param {jsonSchema} variable variable to get value (object jsonschema type)
      * @param {string} variableName variable name
-     * @param {object} settings 
+     * @param {object} settings
      */
     function composeTemplateToVariable(template, variable, variableName, settings) {
         // Set variable
@@ -416,7 +416,7 @@ var ClassVerter = function(){
         // Get all variables
         do {
             var variable = substringBetween(classText, checkpoint, ";");
-            
+
             varToConvert.push(new Variable(variable + ";", template));
             checkpoint = variable + ";";
         } while (!substringBetween(classText, variable + ";", "}").trim().length == 0);
@@ -442,7 +442,7 @@ var ClassVerter = function(){
         var body = "";
         var footer = template.classFooter;
         var variableTemplate = "";
-        
+
         Object.keys(jsonSchema.properties).forEach((value) => {
             // compose variable
             body += composeTemplateToVariable(template, jsonSchema.properties[value], value, settings) + "\n";
@@ -450,7 +450,7 @@ var ClassVerter = function(){
 
         return header + body + footer
     }
-    
+
     /**
      * Convert JSON to json schema equivalent.
      * @param {className: 'string', obj: jsonObj} jsonObj
@@ -519,7 +519,7 @@ var Variable = function (text, template) {
     function getExactValue(genericValue) {
         var currentValue = genericValue;
         var varTemplate = templateVariable.variableNew[genericType.type].values;
-        
+
         var isValidValue = false;
         var counter = 0;
 
@@ -538,7 +538,7 @@ var Variable = function (text, template) {
 
                 // If all results are removed means that it's a simple value that contain only '{value}' in string
                 if (results.length > 0) {
-                    // FIXME understand how to set value if is an array or boolean 
+                    // FIXME understand how to set value if is an array or boolean
                     var order = getAllPosition(valueTemplate, ["{value}", "{numeric}"]);
                     if (order[0] > -1) {
                         currentValue = results[order[0]];
@@ -847,7 +847,7 @@ function capitalizeFirst(value) {
 }
 
 function removeUselessSpaces(text) {
-    return text.replace(/\s\s+/g, ' ');
+    return text.replace(/\t\s\s+/g, ' ');
 }
 
 function getAllPosition(text, keys) {

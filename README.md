@@ -1,5 +1,5 @@
-# ClassVerter
-Little javascript library to convert from one class language to another
+# ClassVerter 0.1
+Javascript library to convert from one class language to another
 
 ## Language available:
 - C#
@@ -15,5 +15,9 @@ Little javascript library to convert from one class language to another
 ## Api documentation:
 
 ```c
-converter(jsonTxtToConvert, fatherClassName, returnedClassType, {});
+	var converter = new Converter();
+    converter.convertToClass(jsonText, typeFrom, typeTo, { isProperty: isProperty, className: jsonClassName, doc: doc });
 ```
+
+### Site:
+http://classverter.tk/

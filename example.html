@@ -12,10 +12,9 @@ function toValidate(){
     var typeTo = getRadioValue("typeTo");
     var doc = document.getElementById("doc").checked;
 	var className = "prova";
-	var converter = new Converter();
+	var converter = new ClassVerter();
 	
-	//toWrite.value = convertJSONToClass(jsonText, className, typeTo, isProperty).join("\n\n");
-    toWrite.value = converter.convertToClass(jsonText, typeFrom, typeTo, { isProperty: isProperty, className: jsonClassName, doc: doc }).join("\n\n");
+    toWrite.value = converter.convertToClass(jsonText, typeFrom, typeTo, { isProperty: isProperty, className: jsonClassName, doc: doc });
 	
 	return false;
 }

@@ -1,5 +1,5 @@
 //
-//  converter.js
+//  ClassVerter.js
 //  This class helps to convert class from a language to another language.
 //  Type supported:
 //    - PHP
@@ -8,15 +8,16 @@
 //    - JAVA
 //    - TypeScript
 //    - JSONSchema
+//    - JSON
 //
 //  - ATTENTION -
 //  It isn't a definitive version, you could find some bugs, if you find, please report to me!
 //
 //  Created by Luca Taddeo
-//  Version: 0.1.0
+//  Version: 0.1
 //
 
-var Converter = function(){
+var ClassVerter = function(){
 
     var PHP = "PHP";
     var CSHARP = "C#";
@@ -271,7 +272,7 @@ var Converter = function(){
                     template = jsTemplate;
                 }
                 // FIXME maybe we can change conversion without passing data to jsonschema?
-                return [convertJSONSchemaToClass(objectResult, template, settings)];
+                return convertJSONSchemaToClass(objectResult, template, settings);
             }
         } catch (ex) {
             // A big catch to capture every occured error (only to prevent reload of the page)

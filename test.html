@@ -46,7 +46,7 @@
     }
 
     function testPHPToPHP(){
-	    var converter = new Converter();
+	    var converter = new ClassVerter();
         var phpToConvert = 
 `class A{
 $b=[];
@@ -81,7 +81,7 @@ public $i=false;
     }
 
     function testPHPToCSHARP() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var phpToConvert =
 `class A{
 $b=[];
@@ -116,7 +116,7 @@ public bool i=false;
     }
 
     function testPHPToJAVA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var phpToConvert =
 `class A{
 $b=[];
@@ -151,7 +151,7 @@ public boolean i=false;
     }
 
     function testPHPToJAVASCRIPT() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var phpToConvert =
 `class A{
 $b=[];
@@ -186,7 +186,7 @@ this.i=false;
     }
 
     function testPHPToTIPESCRIPT() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var phpToConvert =
 `class A{
 $b=[];
@@ -221,7 +221,7 @@ public i:boolean=false;
     }
 
     function testPHPToJSONSCHEMA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var phpToConvert =
 `class A{
 $b=[];
@@ -246,7 +246,7 @@ $i=false;
     }
 
     function testCSToPHP() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var csToConvert =
 `class A{
 int b = 0;
@@ -287,7 +287,7 @@ public $l=false;
     }
 
     function testCSToCS() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var csToConvert =
 `class A{
 int b = 0;
@@ -328,7 +328,7 @@ public bool l=false;
     }
 
     function testCSToJAVA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var csToConvert =
             `class A{
 int b = 0;
@@ -369,7 +369,7 @@ public boolean l=false;
     }
 
     function testCSToJS() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var csToConvert =
             `class A{
 int b = 0;
@@ -410,7 +410,7 @@ this.l=false;
     }
 
     function testCSToTS() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var csToConvert =
             `class A{
 int b = 0;
@@ -451,7 +451,7 @@ public l:boolean=false;
     }
 
     function testCSToJSONSCHEMA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var csToConvert =
             `class A{
 int b = 0;
@@ -479,7 +479,7 @@ bool l = false;
     }
 
     function testJAVAToPHP() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var javaToConvert =
             `class A{
 int b = 0;
@@ -519,7 +519,7 @@ public $k;
     }
 
     function testJAVAToCSHARP() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var javaToConvert =
             `class A{
 int b = 0;
@@ -559,7 +559,7 @@ public int k;
     }
 
     function testJAVAToJAVA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var javaToConvert =
             `class A{
 int b = 0;
@@ -599,7 +599,7 @@ public int k;
     }
 
     function testJAVAToJAVASCRIPT() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var javaToConvert =
             `class A{
 int b = 0;
@@ -639,7 +639,7 @@ this.k;
     }
 
     function testJAVAToTIPESCRIPT() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var javaToConvert =
             `class A{
 int b = 0;
@@ -679,7 +679,7 @@ public k:number;
     }
 
     function testJAVAToJSONSCHEMA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var tipescriptToConvert =
             `class A{
 int b = 0;
@@ -708,7 +708,7 @@ int k;
     }
 
     function testTIPESCRIPTToPHP() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var tipescriptToConvert =
             `class A{
 b:number = 0;
@@ -748,7 +748,7 @@ public $k;
     }
 
     function testTIPESCRIPTToCSHARP() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var tipescriptToConvert =
             `class A{
 b:number = 0;
@@ -788,7 +788,7 @@ public int k;
     }
 
     function testTIPESCRIPTToJAVA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var tipescriptToConvert =
             `class A{
 b:number = 0;
@@ -828,7 +828,7 @@ public int k;
     }
 
     function testTIPESCRIPTToJAVASCRIPT() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var tipescriptToConvert =
             `class A{
 b:number = 0;
@@ -868,7 +868,7 @@ this.k;
     }
 
     function testTIPESCRIPTToTIPESCRIPT() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var tipescriptToConvert =
             `class A{
 b:number = 0;
@@ -908,7 +908,7 @@ public k:number;
     }
 
     function testTIPESCRIPTToJSONSCHEMA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var tipescriptToConvert =
             `class A{
 b:number = 0;
@@ -937,7 +937,7 @@ k:number;
     }
 
     function testJSONToPHP() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var jsonToConvert =
             `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
 
@@ -961,7 +961,7 @@ public $h=false;
     }
 
     function testJSONToCSHARP() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var jsonToConvert =
             `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
 
@@ -985,7 +985,7 @@ public bool h=false;
     }
 
     function testJSONToJAVA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var jsonToConvert =
             `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
 
@@ -1009,7 +1009,7 @@ public boolean h=false;
     }
 
     function testJSONToJAVASCRIPT() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var jsonToConvert =
             `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
 
@@ -1033,7 +1033,7 @@ this.h=false;
     }
 
     function testJSONToTIPESCRIPT() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var jsonToConvert =
             `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
 
@@ -1057,7 +1057,7 @@ public h:boolean=false;
     }
 
     function testJSONToJSONSCHEMA() {
-        var converter = new Converter();
+        var converter = new ClassVerter();
         var jsonToConvert =
             `{"b":0,"c":"ciao","d":true,"e":[],"f":{},"h":false}`;
 

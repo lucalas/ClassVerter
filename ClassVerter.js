@@ -32,10 +32,13 @@ var ClassVerter = function(){
         classHeader: "class {className}{space}{{space}\n",
         variable: {
             variableDoc: "/**\n *{variableDoc}\n **/\n",
-            declarationVariable: "{variableAcModifier} {variableName}{space}",
+            declarationVariable: "{variableAcModifier}{mandatory-variableAcModifier}{variableName}{space}",
             variableValue: "={space}{variableValue}{space}",
             variableClose: ";",
-            variableMarker: "$"
+            variableMarker: "$",
+            mandatory: {
+                "mandatory-variableAcModifier": " "
+            }
         },
         property: {
             getDoc: "/**\n *{getDoc}\n **/\n",
@@ -72,10 +75,13 @@ var ClassVerter = function(){
         classHeader: "class {className}{space}{{space}\n",
         variable: {
             variableDoc: "/**\n *{variableDoc}\n **/\n",
-            declarationVariable: "{variableAcModifier} {variableType} {variableName}{space}",
+            declarationVariable: "{variableAcModifier}{mandatory-variableAcModifier}{variableType} {variableName}{space}",
             variableValue: "={space}{variableValue}{space}",
             variableClose: ";",
-            variableMarker: ""
+            variableMarker: "",
+            mandatory: {
+                "mandatory-variableAcModifier": " "
+            }
         },
         property: {
             getDoc: "",
@@ -112,10 +118,13 @@ var ClassVerter = function(){
         classHeader: "class {className}{space}{{space}\n",
         variable: {
             variableDoc: "/**\n *{variableDoc}\n **/\n",
-            declarationVariable: "{variableAcModifier} {variableType} {variableName}{space}",
+            declarationVariable: "{variableAcModifier}{mandatory-variableAcModifier}{variableType} {variableName}{space}",
             variableValue: "={space}{variableValue}{space}",
             variableClose: ";",
-            variableMarker: ""
+            variableMarker: "",
+            mandatory: {
+                "mandatory-variableAcModifier": " "
+            }
         },
         property: {
             getDoc: "/**\n *{getDoc}\n **/\n",
@@ -152,10 +161,13 @@ var ClassVerter = function(){
         classHeader: "class {className}{space}{{space}\n",
         variable: {
             variableDoc: "/**\n *{variableDoc}\n **/\n",
-            declarationVariable: "{variableAcModifier} {variableName}:{space}{variableType}{space}",
+            declarationVariable: "{variableAcModifier}{mandatory-variableAcModifier}{variableName}:{space}{variableType}{space}",
             variableValue: "={space}{variableValue}{space}",
             variableClose: ";",
-            variableMarker: ""
+            variableMarker: "",
+            mandatory: {
+                "mandatory-variableAcModifier": " "
+            }
         },
         property: {
             getDoc: "/**\n *{getDoc}\n **/\n",
@@ -334,7 +346,7 @@ var ClassVerter = function(){
 
         var variableDocValue = variable.description != null ? variable.description : "";
 
-        var variableToReturn = replaceAll(variableTemplate, ["{variableDoc}", "{variableAcModifier}", "{variableType}", "{variableName}", "{capVariableName}", "{variableValue}", "{value}", "{numeric}", "{setDoc}", "{getDoc}", /*"{variableArrayType}",*/ "{space}"], [variableDocValue, modifier, getVariableType(template.variableTypes, variable), template.variable.variableMarker + variableName, capitalizeFirst(variableName), getVariableNew(variable), variable.default != null ? variable.default : "", variable.default != null ? variable.default : "", variableDocValue, variableDocValue/*, variable.items != null ? getVariableType(template.variableTypes, variable.items.type) : ""*/, ""]);
+        var variableToReturn = replaceAll(variableTemplate, ["{mandatory-variableAcModifier}", "{variableDoc}", "{variableAcModifier}", "{variableType}", "{variableName}", "{capVariableName}", "{variableValue}", "{value}", "{numeric}", "{setDoc}", "{getDoc}", /*"{variableArrayType}",*/ "{space}"], [" ", variableDocValue, modifier, getVariableType(template.variableTypes, variable), template.variable.variableMarker + variableName, capitalizeFirst(variableName), getVariableNew(variable), variable.default != null ? variable.default : "", variable.default != null ? variable.default : "", variableDocValue, variableDocValue/*, variable.items != null ? getVariableType(template.variableTypes, variable.items.type) : ""*/, ""]);
 
         return variableToReturn;
 
@@ -495,15 +507,14 @@ var Variable = function (text, template) {
     // Regex
     var spaceMandatoryReg = "([\\s]+)";
     var spaceNotMandatoryReg = "([\\s]*)";
-    var accessModifierReg = "^([" + templateVariable.accessorModifiers.private + "|" + templateVariable.accessorModifiers.public + "|" + templateVariable.accessorModifiers.protected + "]+)";
+    this.accessModifierReg = "([" + templateVariable.accessorModifiers.private + "|" + templateVariable.accessorModifiers.public + "|" + templateVariable.accessorModifiers.protected + "]+)";
     var typeReg = "([[a-zA-Z0-9<>]+)";
     var nameReg = "([[a-zA-Z0-9]+)";
     var valueReg = "(.+)"; // FIXME restrict value
     var equalsReg = "([=]+)";
-    var closeReg = "([" + templateVariable.variable.variableClose + "]+)";
+    //var closeReg = "([" + templateVariable.variable.variableClose + "]+)";
+    var closeReg = templateVariable.variable.variableClose;
     var markerReg = templateVariable.variable.variableMarker.length > 0 ? "([" + templateVariable.variable.variableMarker + "]+)" : "";
-
-    createVariable();
 
     function createVariable() {
         var isValid = true;
@@ -562,13 +573,13 @@ var Variable = function (text, template) {
         var success = false;
         accessModifier = getAccessModifierFromText();
         var variableTemplate = templateVariable.variable.declarationVariable + templateVariable.variable.variableValue + closeReg;
-        if (!hasAccessModifier()) {
+        /*if (!hasAccessModifier()) {
             variableTemplate = replaceAll(variableTemplate, ["{variableAcModifier} "], [""]);
-        }
+        }*/
         var parser = new TemplateParser();
         variableTemplate = removeUselessSpaces(variableTemplate);
         textVariable = removeUselessSpaces(textVariable);
-        var replacedVarTemplate = parser.parse(variableTemplate, templateVariable);//replaceAll(variableTemplate, ["{variableAcModifier}", "{variableName}", "{variableType}", "=", "{variableValue}", "{space}"], [currentAMReg, markerReg + nameReg, typeReg, equalsReg, valueReg, spaceNotMandatoryReg]);
+        var replacedVarTemplate = parser.parse(variableTemplate, templateVariable, self);//replaceAll(variableTemplate, ["{variableAcModifier}", "{variableName}", "{variableType}", "=", "{variableValue}", "{space}"], [currentAMReg, markerReg + nameReg, typeReg, equalsReg, valueReg, spaceNotMandatoryReg]);
         //replacedVarTemplate = "^" + replaceAll(replacedVarTemplate.trim(), [" "], [spaceMandatoryReg]) + "$";
 
         var verify = new RegExp(replacedVarTemplate);
@@ -576,7 +587,7 @@ var Variable = function (text, template) {
 
         if (res != null) {
             var results = removeAllFromArray(res, [templateVariable.variable.variableMarker, "=", templateVariable.variable.variableClose, textVariable, "", " "]);
-            variableTemplate = hasAccessModifier() ? variableTemplate : replaceAll(variableTemplate, ["{variableAcModifier}"], [""]);
+            variableTemplate = hasAccessModifier() ? variableTemplate : replaceAll(variableTemplate, ["{variableAcModifier}", "{mandatory-variableAcModifier}"], ["", ""]);
             var order = getAllPosition(variableTemplate, ["{variableAcModifier}", "{variableName}", "{variableType}", "{variableValue}"]);
             accessModifier = order[0] >= 0 ? results[order[0]] : "";
             name = order[1] >= 0 ? results[order[1]] : "";
@@ -601,14 +612,15 @@ var Variable = function (text, template) {
         var variableTemplate = templateVariable.variable.declarationVariable + closeReg;
         var currentAMReg = hasAccessModifier() ? accessModifierReg : "";
 
-        var replacedVarTemplate = replaceAll(variableTemplate, ["{variableAcModifier}", "{variableName}", "{variableType}", "{space}"], [currentAMReg, markerReg + nameReg, typeReg, spaceNotMandatoryReg]);
-        replacedVarTemplate = "^" + replaceAll(replacedVarTemplate.trim(), [" "], [spaceMandatoryReg]) + "$";
+        var parser = new TemplateParser();
+        var replacedVarTemplate = parser.parse(variableTemplate, templateVariable, self);//replaceAll(variableTemplate, ["{variableAcModifier}", "{variableName}", "{variableType}", "{space}"], [currentAMReg, markerReg + nameReg, typeReg, spaceNotMandatoryReg]);
+        //replacedVarTemplate = "^" + replaceAll(replacedVarTemplate.trim(), [" "], [spaceMandatoryReg]) + "$";
         var verify = new RegExp(replacedVarTemplate);
         var res = verify.exec(textVariable);
 
         if (res != null) {
             var results = removeAllFromArray(res, [templateVariable.variable.variableMarker, templateVariable.variable.variableClose, textVariable, "", " "]);
-            variableTemplate = hasAccessModifier() ? variableTemplate : replaceAll(variableTemplate, ["{variableAcModifier}"], [""]);
+            variableTemplate = hasAccessModifier() ? variableTemplate : replaceAll(variableTemplate, ["{variableAcModifier}", "{mandatory-variableAcModifier}"], ["", ""]);
             var order = getAllPosition(variableTemplate, ["{variableAcModifier}", "{variableName}", "{variableType}"]);
             accessModifier = order[0] >= 0 ? results[order[0]] : "";
             name = order[1] >= 0 ? results[order[1]] : "";
@@ -627,9 +639,11 @@ var Variable = function (text, template) {
 
         while (i < keyTypes.length && newType == null) {
             var currentGenericType = keyTypes[i];
-            var currentTemplateType = "^" + templateVariable.variableTypes[currentGenericType] + "$";
+            //var currentTemplateType = "^" + templateVariable.variableTypes[currentGenericType] + "$";
+            var currentTemplateType = templateVariable.variableTypes[currentGenericType];
 
-            var currentReplacedType = replaceAll(currentTemplateType, ["{variableArrayType}"], ["(.+)"]);
+            var parser = new TemplateParser();
+            var currentReplacedType = parser.parse(currentTemplateType, templateVariable);//replaceAll(currentTemplateType, ["{variableArrayType}"], ["(.+)"]);
 
             var verify = new RegExp(currentReplacedType);
             var res = verify.exec(currentType);
@@ -665,9 +679,11 @@ var Variable = function (text, template) {
             var currentGenericType = keyTypes[i];
             var j = 0;
             while (j < templateVariable.variableNew[currentGenericType].values.length && findedType == null) {
-                var currentTemplateValue = "^" + templateVariable.variableNew[currentGenericType].values[j] + "$";
+                //var currentTemplateValue = "^" + templateVariable.variableNew[currentGenericType].values[j] + "$";
+                var currentTemplateValue = templateVariable.variableNew[currentGenericType].values[j];
 
-                var currentReplacedValue = replaceAll(RegExp.escape(currentTemplateValue), ["{value}", "{numeric}"], ["(.*)", "([0-9]+)"]);
+                var parser = new TemplateParser();
+                var currentReplacedValue = parser.parse(RegExp.escape(currentTemplateValue), templateVariable);//replaceAll(RegExp.escape(currentTemplateValue), ["{value}", "{numeric}"], ["(.*)", "([0-9]+)"]);
 
                 var verify = new RegExp(currentReplacedValue);
                 var res = verify.exec(value);
@@ -699,7 +715,9 @@ var Variable = function (text, template) {
             var currentGenericType = keyTypes[i];
             var currentTemplateType = templateVariable.variableTypes[currentGenericType];
 
-            var currentReplacedType = "^" + replaceAll(currentTemplateType, ["{variableArrayType}"], ["(.+)"]) + "$";
+            var parser = new TemplateParser();
+            var currentReplacedType = parser.parse(RegExp.escape(currentTemplateType), templateVariable);
+            //var currentReplacedType = "^" + replaceAll(currentTemplateType, ["{variableArrayType}"], ["(.+)"]) + "$";
 
             var verify = new RegExp(currentReplacedType);
             var res = verify.exec(currentType);
@@ -726,6 +744,10 @@ var Variable = function (text, template) {
         return newType;
     }
 
+    /**
+     * Custom function to get access modifier before of regex expression.
+     * I should probably remove in future.
+     */
     function getAccessModifierFromText() {
         if (textVariable.indexOf(templateVariable.accessorModifiers.private + " ") === 0)
             return templateVariable.accessorModifiers.private;
@@ -753,6 +775,10 @@ var Variable = function (text, template) {
         return accessModifier;
     }
 
+    this.hasAccessModifier = function () {
+        return hasAccessModifier();
+    }
+
     this.getValue = function () {
         return value;
     }
@@ -769,19 +795,22 @@ var Variable = function (text, template) {
     this.toJSONSchema = function () {
         // TODO convert to jsonschema
     }
+
+    var self = this;
+
+    createVariable();
 }
 
 var TemplateParser = function () {
-    this.parse = function (value, template) {
-        var parserValues = getKeysToReg(template);
-
-        // FIME object.values non esiste, trovare il metodo giusto
+    this.parse = function (value, template, variable) {
+        var parserValues = getKeysToReg(template, variable);
+        
         var tempValueReg = "^" + replaceAll(value, Object.keys(parserValues), objValue(parserValues)) + "$";
 
         return tempValueReg;
     }
 
-    function getKeysToReg(template) {
+    function getKeysToReg(template, variable) {
         var markerReg = template.variable.variableMarker.length > 0 ? "([" + template.variable.variableMarker + "]+)" : "";
 
         var keysToReg = {
@@ -798,8 +827,22 @@ var TemplateParser = function () {
             "{value}": "(.*)",
             "{variableArrayType}": "(.+)",
             "{variableType}":"([[a-zA-Z0-9<>]+)",
-            " ": "([\\s]+)"
+            " ": "([\\s]+)",
+            "{mandatory-variableAcModifier}": " ",
+            "{numeric}": "([0-9]+)"
         };
+
+        if (variable) {
+            // FIXME if there's an access modifier we set it and set another character near to the modifier
+            // Verify if we can remove "mandatory-variableAcModifier" join it to variableAcModifier
+            if (variable.hasAccessModifier()) {
+                keysToReg["{variableAcModifier}"] = variable.accessModifierReg;
+                keysToReg["{mandatory-variableAcModifier}"] = variable.mandatory["mandatory-variableAcModifier"];
+            } else {
+                keysToReg["{variableAcModifier}"] = "";
+                keysToReg["{mandatory-variableAcModifier}"] = "";
+            }
+        }
 
         return keysToReg;
     }

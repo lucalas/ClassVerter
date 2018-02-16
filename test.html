@@ -467,7 +467,7 @@ Casa k;
 bool l = false;
 }`;
 
-        var expected = `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":"new List<int>()"},"f":{"type":"object","default":null},"g":{"type":"number","default":null},"h":{"type":"string","default":null},"i":{"type":"boolean","default":null},"j":{"type":"array","items":{"type":"number"},"default":null},"k":{"type":"object","default":null},"l":{"type":"boolean","default":"false"}}}`;
+        var expected = `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":"new List<int>()"},"f":{"type":"object","default":null},"g":{"type":"number","default":null},"h":{"type":"string","default":null},"i":{"type":"boolean","default":null},"j":{"type":"array","items":{"type":"number"},"default":null},"k":{"type":"unknown","default":null},"l":{"type":"boolean","default":"false"}}}`;
 
         var result = converter.convertToClass(csToConvert, "C#", "JSONSCHEMA", { isProperty: false, doc: false });
 
@@ -696,7 +696,7 @@ int k;
 `;
 
         var expected =
-            `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":null},"f":{"type":"object","default":null},"g":{"type":"object","default":null},"h":{"type":"boolean","default":"false"},"i":{"type":"boolean","default":null},"j":{"type":"string","default":null},"k":{"type":"number","default":null}}}`;
+            `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":null},"f":{"type":"object","default":null},"g":{"type":"unknown","default":null},"h":{"type":"boolean","default":"false"},"i":{"type":"boolean","default":null},"j":{"type":"string","default":null},"k":{"type":"number","default":null}}}`;
 
         var result = converter.convertToClass(tipescriptToConvert, "JAVA", "JSONSCHEMA", { isProperty: false, doc: false });
 
@@ -925,7 +925,7 @@ k:number;
 `;
 
         var expected =
-            `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":null},"f":{"type":"object","default":null},"g":{"type":"object","default":null},"h":{"type":"boolean","default":"false"},"i":{"type":"boolean","default":null},"j":{"type":"string","default":null},"k":{"type":"number","default":null}}}`;
+            `{"title":"A","type":"object","properties":{"b":{"type":"number","default":"0"},"c":{"type":"string","default":"ciao"},"d":{"type":"boolean","default":"true"},"e":{"type":"array","items":{"type":"number"},"default":null},"f":{"type":"object","default":null},"g":{"type":"unknown","default":null},"h":{"type":"boolean","default":"false"},"i":{"type":"boolean","default":null},"j":{"type":"string","default":null},"k":{"type":"number","default":null}}}`;
 
         var result = converter.convertToClass(tipescriptToConvert, "TS", "JSONSCHEMA", { isProperty: false, doc: false });
 

@@ -1,7 +1,7 @@
 # ClassVerter 0.1
 Javascript library to convert from one class language to another
 
-http://lucataddeo.altervista.org/ClassVerter/
+[ClassVerter](http://lucataddeo.altervista.org/ClassVerter/)
 
 ## Language available:
 - C#
@@ -36,4 +36,4 @@ converter.convertToClass(ClassText, typeFrom, typeTo, { isProperty: isProperty, 
 
 
 ### Site:
-http://lucataddeo.altervista.org/ClassVerter/
+[ClassVerter](http://lucataddeo.altervista.org/ClassVerter/)
